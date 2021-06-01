@@ -9,7 +9,7 @@
 [touchable]: https://facebook.github.io/react-native/docs/touchablewithoutfeedback.html#props
 [textfield]: https://github.com/n4kz/react-native-material-textfield#properties
 
-# react-native-material-dropdown
+# react-native-searchable-material-dropdown
 
 [![npm][npm-badge]][npm-url]
 [![license][license-badge]][license-url]
@@ -32,14 +32,14 @@ Material dropdown with consistent behaviour on iOS and Android
 ## Installation
 
 ```bash
-npm install --save react-native-material-dropdown
+npm install --save react-native-searchLabel-material-dropdown
 ```
 
 ## Usage
 
 ```javascript
 import React, { Component } from 'react';
-import { Dropdown } from 'react-native-material-dropdown';
+import { Dropdown } from 'react-native-searchLabel-material-dropdown';
 
 class Example extends Component {
   render() {
@@ -96,6 +96,7 @@ class Example extends Component {
  labelExtractor    | Extract label from item (args: item, index)   | Function | ({ label }) => label
  propsExtractor    | Extract props from item (args: item, index)   | Function | () => null
  onChangeText      | Selection callback (args: value, index, data) | Function | -
+ searchLabel       | allow search in dropdown by label             | Boolean  | false
 
 Other [TextField][textfield], [TextInput][textinput] and [TouchableWithoutFeedback][touchable] properties will also work
 
@@ -109,15 +110,6 @@ Other [TextField][textfield], [TextInput][textinput] and [TouchableWithoutFeedba
  selectedIndex() | Get selected index             | Number
  selectedItem()  | Get selected item              | Object
  isFocused()     | Get current focus state        | Boolean
-
-## Example
-
-```bash
-git clone https://github.com/n4kz/react-native-material-dropdown
-cd react-native-material-dropdown/example
-npm install
-npm run ios # or npm run android
-```
 
 ## Copyright and License
 
