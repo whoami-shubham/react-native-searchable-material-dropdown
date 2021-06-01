@@ -1,5 +1,5 @@
 [npm-badge]: https://img.shields.io/npm/v/react-native-material-dropdown.svg?colorB=ff6d00
-[npm-url]: https://npmjs.com/package/react-native-material-dropdown
+[npm-url]: https://www.npmjs.com/package/react-native-searchable-material-dropdown
 [license-badge]: https://img.shields.io/npm/l/react-native-material-dropdown.svg?colorB=448aff
 [license-url]: https://raw.githubusercontent.com/n4kz/react-native-material-dropdown/master/license.txt
 [codeclimate-badge]: https://img.shields.io/codeclimate/maintainability/n4kz/react-native-material-dropdown.svg
@@ -17,7 +17,9 @@
 
 Material dropdown with consistent behaviour on iOS and Android
 
-![example][example-url]
+![example][example-url] 
+![example2](https://user-images.githubusercontent.com/28999685/120331233-31a6be80-c30b-11eb-9dae-f614a7a718e6.png)
+
 
 ## Features
 
