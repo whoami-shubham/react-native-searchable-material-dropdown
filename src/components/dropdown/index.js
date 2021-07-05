@@ -344,10 +344,10 @@ export default class Dropdown extends PureComponent {
       onChangeText(value, index, data);
     }
 
-    setTimeout(() => {
+    //setTimeout(() => {
       this.onClose(value);
-      this.setState({ data: this.props.data });
-    }, delay);
+      this.setState({ data: this.props.data,modal: false });
+    //}, delay);
   }
 
   onLayout(event) {
