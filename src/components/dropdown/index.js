@@ -328,7 +328,7 @@ export default class Dropdown extends PureComponent {
       }
 
       if (this.mounted) {
-        this.setState({ value, modal: false });
+        this.setState({ value, modal: false,searchText:undefined,data:this.props.data });
       }
     });
   }
@@ -716,7 +716,7 @@ export default class Dropdown extends PureComponent {
       accessible,
       accessibilityLabel,
     };
-
+    const {searchLabel,searchByLabel} = this.props
     return (
       <View
         onLayout={this.onLayout}
@@ -745,10 +745,10 @@ export default class Dropdown extends PureComponent {
               style={[styles.picker, pickerStyle, pickerStyleOverrides]}
               onStartShouldSetResponder={() => true}
             >
-              {this.props.searchLabel ? (
+              {searchByLabel ? (
                 <TextInput
                   style={styles.input}
-                  placeholder={"Search"}
+                  placeholder={searchLabel || "Search"}
                   placeholderTextColor="#000"
                   clearButtonMode="always"
                   onSubmitEditing={() => {
