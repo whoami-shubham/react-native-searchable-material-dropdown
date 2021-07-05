@@ -628,8 +628,11 @@ export default class Dropdown extends PureComponent {
     const newData = data.filter((item) => {
       const curLabel = item && item.label && `${item.label.toLowerCase()}`;
       const searchLabel = searchText.toLowerCase();
-      return curLabel && curLabel.indexOf(searchLabel) > -1;
+      return curLabel.indexOf(searchLabel) > -1;
     });
+    if(!newData.length){
+      newData.push({label:"",value:""})
+    }
     this.setState({ data: [...newData], searchText });
   }
 
@@ -717,6 +720,7 @@ export default class Dropdown extends PureComponent {
       accessibilityLabel,
     };
     const {searchLabel,searchByLabel} = this.props
+    const isEmpty = !this.state.data || !this.state.data.length || (!this.state.data[0].value && !this.state.data[0].label );
     return (
       <View
         onLayout={this.onLayout}
@@ -742,7 +746,7 @@ export default class Dropdown extends PureComponent {
             onResponderRelease={this.blur}
           >
             <View
-              style={[styles.picker, pickerStyle, pickerStyleOverrides]}
+              style={[ styles.picker, pickerStyle, pickerStyleOverrides, isEmpty?styles.noData:null]}
               onStartShouldSetResponder={() => true}
             >
               {searchByLabel ? (
@@ -757,7 +761,8 @@ export default class Dropdown extends PureComponent {
                       modal: false,
                     });
                   }}
-                  onChangeText={(text) => this.searchFilter(text)}
+                  value={this.state.searchText}
+                  onChangeText={(text) => this.searchFilter(text.trim())}
                 />
               ) : null}
               <FlatList

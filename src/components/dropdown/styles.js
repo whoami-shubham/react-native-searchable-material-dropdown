@@ -46,8 +46,9 @@ export default StyleSheet.create({
 
       android: {
         elevation: 2,
-      },
+      }, 
     }),
+    maxHeight: 180
   },
 
   item: {
@@ -67,4 +68,7 @@ export default StyleSheet.create({
     borderBottomWidth: 0.5,
     color: '#808080',
   },
+  noData:{
+    maxHeight: 80
+  }
 });
