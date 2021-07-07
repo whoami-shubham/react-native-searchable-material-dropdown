@@ -48,7 +48,7 @@ export default StyleSheet.create({
         elevation: 2,
       }, 
     }),
-    maxHeight: 180
+    height: 180
   },
 
   item: {
@@ -69,6 +69,6 @@ export default StyleSheet.create({
     color: '#808080',
   },
   noData:{
-    maxHeight: 80
+    height: 80
   }
 });

@@ -11,6 +11,7 @@ import {
   Platform,
   ViewPropTypes,
   I18nManager,
+  Keyboard
 } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { TextInput } from "react-native-paper";
@@ -172,7 +173,7 @@ export default class Dropdown extends PureComponent {
 
     this.blur = () => this.onClose();
     this.focus = this.onPress;
-
+    this._keyboardDidHide = this._keyboardDidHide.bind(this);
     let { value, data } = this.props;
 
     this.mounted = false;
@@ -194,14 +195,20 @@ export default class Dropdown extends PureComponent {
     }
   }
 
+  _keyboardDidHide(){
+      this.onClose();
+  }
+
   componentDidMount() {
     this.mounted = true;
+    Keyboard.addListener("keyboardDidHide", this._keyboardDidHide);
   }
 
   componentWillUnmount() {
+    Keyboard.removeListener("keyboardDidHide", this._keyboardDidHide);
     this.mounted = false;
   }
-
+  
   onPress(event) {
     let {
       data,
@@ -280,15 +287,17 @@ export default class Dropdown extends PureComponent {
 
       let top = y + dropdownOffset.top - itemPadding;
 
-      this.setState({
-        modal: true,
-        width: right - left,
-        top,
-        left,
-        leftInset,
-        rightInset,
-        selected,
-      });
+      this.setState((prevState)=>(
+        {
+          modal: !prevState.modal,
+          width: right - left,
+          top,
+          left,
+          leftInset,
+          rightInset,
+          selected,
+        }
+      ));
 
       setTimeout(() => {
         if (this.mounted) {
@@ -344,10 +353,10 @@ export default class Dropdown extends PureComponent {
       onChangeText(value, index, data);
     }
 
-    //setTimeout(() => {
+    setTimeout(() => {
       this.onClose(value);
-      this.setState({ data: this.props.data,modal: false });
-    //}, delay);
+      this.setState({ data: this.props.data,modal: false,searchText:undefined });
+    }, delay);
   }
 
   onLayout(event) {
