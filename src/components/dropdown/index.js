@@ -11,7 +11,7 @@ import {
   Platform,
   ViewPropTypes,
   I18nManager,
-  Keyboard
+  Keyboard,
 } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { TextInput } from "react-native-paper";
@@ -195,8 +195,19 @@ export default class Dropdown extends PureComponent {
     }
   }
 
-  _keyboardDidHide(){
-      this.onClose();
+  _keyboardDidHide() {
+    let { onBlur, animationDuration, useNativeDriver } = this.props;
+    let { opacity } = this.state;
+
+    setTimeout(
+      () =>
+        Animated.timing(opacity, {
+          duration: animationDuration,
+          toValue: 0,
+          useNativeDriver,
+        }).start(() => {}),
+      4000
+    );
   }
 
   componentDidMount() {
@@ -208,7 +219,7 @@ export default class Dropdown extends PureComponent {
     Keyboard.removeListener("keyboardDidHide", this._keyboardDidHide);
     this.mounted = false;
   }
-  
+
   onPress(event) {
     let {
       data,
@@ -287,17 +298,17 @@ export default class Dropdown extends PureComponent {
 
       let top = y + dropdownOffset.top - itemPadding;
 
-      this.setState((prevState)=>(
-        {
-          modal: !prevState.modal,
-          width: right - left,
-          top,
-          left,
-          leftInset,
-          rightInset,
-          selected,
-        }
-      ));
+      this.setState({
+        modal: true,
+        width: right - left,
+        searchText: undefined,
+        data: this.props.data,
+        top,
+        left,
+        leftInset,
+        rightInset,
+        selected,
+      });
 
       setTimeout(() => {
         if (this.mounted) {
@@ -337,7 +348,12 @@ export default class Dropdown extends PureComponent {
       }
 
       if (this.mounted) {
-        this.setState({ value, modal: false,searchText:undefined,data:this.props.data });
+        this.setState({
+          value,
+          modal: false,
+          searchText: undefined,
+          data: this.props.data,
+        });
       }
     });
   }
@@ -352,10 +368,13 @@ export default class Dropdown extends PureComponent {
     if ("function" === typeof onChangeText) {
       onChangeText(value, index, data);
     }
-
+    this.setState({
+      data: this.props.data,
+      modal: false,
+      searchText: undefined,
+    });
     setTimeout(() => {
       this.onClose(value);
-      this.setState({ data: this.props.data,modal: false,searchText:undefined });
     }, delay);
   }
 
@@ -639,8 +658,8 @@ export default class Dropdown extends PureComponent {
       const searchLabel = searchText.toLowerCase();
       return curLabel.indexOf(searchLabel) > -1;
     });
-    if(!newData.length){
-      newData.push({label:"",value:""})
+    if (!newData.length) {
+      newData.push({ label: "", value: "" });
     }
     this.setState({ data: [...newData], searchText });
   }
@@ -728,8 +747,11 @@ export default class Dropdown extends PureComponent {
       accessible,
       accessibilityLabel,
     };
-    const {searchLabel,searchByLabel} = this.props
-    const isEmpty = !this.state.data || !this.state.data.length || (!this.state.data[0].value && !this.state.data[0].label );
+    const { searchLabel, searchByLabel } = this.props;
+    const isEmpty =
+      !this.state.data ||
+      !this.state.data.length ||
+      (!this.state.data[0].value && !this.state.data[0].label);
     return (
       <View
         onLayout={this.onLayout}
@@ -755,7 +777,14 @@ export default class Dropdown extends PureComponent {
             onResponderRelease={this.blur}
           >
             <View
-              style={[ styles.picker, pickerStyle, pickerStyleOverrides, isEmpty?styles.noData:null]}
+              style={[
+                styles.picker,
+                pickerStyle,
+                pickerStyleOverrides,
+                isEmpty
+                  ? styles.noData
+                  : { height: Math.min(180, this.state.data.length * 50 + 40) },
+              ]}
               onStartShouldSetResponder={() => true}
             >
               {searchByLabel ? (
