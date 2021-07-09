@@ -196,27 +196,27 @@ export default class Dropdown extends PureComponent {
   }
 
   _keyboardDidHide() {
-    let { onBlur, animationDuration, useNativeDriver } = this.props;
-    let { opacity } = this.state;
+    // let { onBlur, animationDuration, useNativeDriver } = this.props;
+    // let { opacity } = this.state;
 
-    setTimeout(
-      () =>
-        Animated.timing(opacity, {
-          duration: animationDuration,
-          toValue: 0,
-          useNativeDriver,
-        }).start(() => {}),
-      4000
-    );
+    // setTimeout(
+    //   () =>
+    //     Animated.timing(opacity, {
+    //       duration: animationDuration,
+    //       toValue: 0,
+    //       useNativeDriver,
+    //     }).start(() => {}),
+    //   4000
+    // );
   }
 
   componentDidMount() {
     this.mounted = true;
-    Keyboard.addListener("keyboardDidHide", this._keyboardDidHide);
+   // Keyboard.addListener("keyboardDidHide", this._keyboardDidHide);
   }
 
   componentWillUnmount() {
-    Keyboard.removeListener("keyboardDidHide", this._keyboardDidHide);
+    //Keyboard.removeListener("keyboardDidHide", this._keyboardDidHide);
     this.mounted = false;
   }
 
@@ -793,12 +793,12 @@ export default class Dropdown extends PureComponent {
                   placeholder={searchLabel || "Search"}
                   placeholderTextColor="#000"
                   clearButtonMode="always"
-                  onSubmitEditing={() => {
-                    this.setState({
-                      value: this.state.searchText,
-                      modal: false,
-                    });
-                  }}
+                  // onSubmitEditing={() => {
+                  //   this.setState({
+                  //     value: this.state.searchText,
+                  //     modal: false,
+                  //   });
+                  // }}
                   value={this.state.searchText}
                   onChangeText={(text) => this.searchFilter(text.trim())}
                 />
